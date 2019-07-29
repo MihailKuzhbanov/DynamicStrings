@@ -14,25 +14,26 @@ public:
 	{
 		this->size = size;
 		Container = new string[size];
+		cout << "Creating constructor" << endl;
 	}
 
 	//деструктор
 	~DynStr()
 	{
-		
+		cout << "Destructor" << endl;
 	}
 
 	//конструктор копирования
 	DynStr(const DynStr &obj)
 	{
-		*this = obj;
+		cout << "Copy constructor" << endl;
 	}
 
 	//перегрузка оператора присваивания
 	DynStr& operator=(const DynStr &obj)
 	{
-
 		return *this;
+		cout << "Operator overload" << endl;
 	}
 
 	//добавление строки в конец
@@ -46,6 +47,7 @@ public:
 		}
 		newContainer[size-1] = newStr;
 		Container = newContainer;
+		cout << "String added" << endl;
 	}
 
 
@@ -56,7 +58,7 @@ int main()
 	DynStr* a = new DynStr(5);
 	cout << a->size << endl;
 	a->AddStr("smth");
-	DynStr* b = new DynStr(*a);
+	//DynStr* b = DynStr(a);
 	DynStr* c = a;
 	b->AddStr("noth");
 	cout << "a size: " << a->size << endl;
