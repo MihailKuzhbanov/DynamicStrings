@@ -36,6 +36,15 @@
 		}
 	}
 
+	//move constructor
+	DynString::DynString(DynString &&obj)
+	{
+		size = obj.size;
+		Container = obj.Container;
+		obj.size = 0;
+		obj.Container = nullptr;
+	}
+
 	//assignment operator overload
 	DynString& DynString::operator=(const DynString &obj)
 	{
@@ -53,6 +62,23 @@
 
 		return *this;
 	}
+
+	//move assignment operator overload
+	DynString& DynString::operator=(DynString&& obj)
+	{
+		if (this != &obj)
+		{
+			delete[] Container;
+
+			Container = obj.Container;
+			size = obj.size;
+
+			obj.Container = nullptr;
+			obj.size = 0;
+		}
+		return *this;
+	}
+
 
 	//add element in the end
 	void DynString::AddStr(string newStr)

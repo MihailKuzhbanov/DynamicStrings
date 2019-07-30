@@ -1,3 +1,4 @@
+#include <vector>					//use STL example
 #include "DynString.h"
 
 using namespace std;
@@ -25,6 +26,22 @@ int main()
 	newArr->DelStr(0);
 	testArr->Show();
 	newArr->Show();
+
+	cout << "Reverse array: " << endl;
+
+	vector<string> vecArr;
+
+	for (int i = newArr->size - 1; i >= 0; i--)
+	{
+		vecArr.push_back(newArr->Container[i]);
+	}
+
+
+	for (int i = 0; i < vecArr.size(); i++)
+	{
+		cout << vecArr[i] << " ";
+	}
+	cout << endl;
 
 	system("pause");
 	return 0;
