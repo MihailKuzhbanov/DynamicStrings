@@ -111,7 +111,11 @@
 		if (this->size < str.size)	count = this->size;
 		for (int i = 0; i < count; i++)
 		{
-			if (this->Container[i] > str.Container[i])	return true;
+			if (this->Container[i] != str.Container[i])
+			{
+				if (this->Container[i] > str.Container[i])	return true;
+				return false;
+			}
 		}
 		return false;
 	}

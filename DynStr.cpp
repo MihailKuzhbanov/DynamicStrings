@@ -28,19 +28,19 @@ void Print(vector<DynString> data)
 
 void Sort(vector<DynString>& input)
 {
-	for (int i = 0; i < input.size(); i++)
-	{
-		for (int j = 0; j < input.size(); j++)
+		for (int i = 0; i < input.size(); i++)
 		{
-			if (input[i].IsMore(input[j]))
+			for (int j = 0; j < input.size(); j++)
 			{
-				DynString temp =input[i];
-				input[i] = input[j];
-				input[j] = temp;
+				if (input[i].IsMore(input[j]))
+				{
+					DynString temp = input[i];
+					input[i] = input[j];
+					input[j] = temp;
+				}
 			}
 
 		}
-	}
 }
 
 
@@ -48,8 +48,7 @@ void Sort(vector<DynString>& input)
 int main()
 {
 	const int steps = 5;
-
-	
+	cout << "Enter strings:" << endl;
 	vector<DynString> vecStr = Input(steps);
 	cout << "Original array: " << endl;
 	Print(vecStr);
@@ -58,7 +57,6 @@ int main()
 	Print(vecStr);
 	cout << endl;
 
-	
 	system("pause");
 	return 0;
 }
