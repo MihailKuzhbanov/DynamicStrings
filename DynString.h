@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -7,15 +8,19 @@ class DynString
 {
 public:
 	int size;
-	char* Container;
+	string* Container;
 	DynString& operator=(const DynString &obj);
-	DynString& operator+(const DynString &obj);
 	DynString& operator=(DynString&& obj);
-	DynString(char*);
+	DynString(int size);
+	DynString(string* str, int s);
 	~DynString();
 	DynString(const DynString &obj);
 	DynString(DynString &&obj);
+	void AddStr(string newStr);
+	void AddStr(string newStr, int index);
+	void DelStr(int index);
+	void DelStr(string delStr);
 	void Show();
-	bool IsMore(DynString);
+	void Sort();
 };
 

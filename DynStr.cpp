@@ -1,60 +1,46 @@
-#include <vector>					//for STL example
+#include <vector>					//use STL example
 #include "DynString.h"
 
 using namespace std;
 
-vector<DynString> Input(int count)
-{
-	const int maxSize = 256;
-	char* inputBuffer = new char[maxSize]();
-	vector<DynString> result;
-	for (int i = 0; i < count; i++)
-	{
-		cin.getline(inputBuffer, maxSize, '\n');
-		result.push_back(DynString(inputBuffer));
-	}
-	return result;
-}
-
-void Print(vector<DynString> data)
-{
-	for (DynString element : data)
-	{
-		element.Show();
-		cout << " ";
-	}
-	cout << endl;
-}
-
-void Sort(vector<DynString>& input)
-{
-		for (int i = 0; i < input.size(); i++)
-		{
-			for (int j = 0; j < input.size(); j++)
-			{
-				if (input[i].IsMore(input[j]))
-				{
-					DynString temp = input[i];
-					input[i] = input[j];
-					input[j] = temp;
-				}
-			}
-
-		}
-}
-
-
-
 int main()
 {
-	const int steps = 5;
-	cout << "Enter strings:" << endl;
-	vector<DynString> vecStr = Input(steps);
+	int testSize = 8;
+	string testStrings[8] = {"Charlie","Echo", "Delta","Alpha","Bravo","Foxtrot","Hotel","Golf"};
+	
+	DynString* testArr = new DynString(testStrings,testSize);
+	DynString* newArr = new DynString(*testArr);
+	
+
 	cout << "Original array: " << endl;
-	Print(vecStr);
-	Sort(vecStr);
+	testArr->Show();
+
+	
 	cout << "Sorted array: " << endl;
-	Print(vecStr);
+	newArr->Sort();
+	newArr->Show();
+
+	cout << "Changed arrays: " << endl;
+
+	testArr->AddStr("Julya");
+	newArr->DelStr(0);
+	testArr->Show();
+	newArr->Show();
+
+	cout << "Reverse array: " << endl;
+
+	vector<string> vecArr;
+
+	for (int i = newArr->size - 1; i >= 0; i--)
+	{
+		vecArr.push_back(newArr->Container[i]);
+	}
+
+
+	for (int i = 0; i < vecArr.size(); i++)
+	{
+		cout << vecArr[i] << " ";
+	}
 	cout << endl;
 
 	system("pause");

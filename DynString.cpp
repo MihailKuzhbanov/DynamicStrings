@@ -1,22 +1,23 @@
 #include "DynString.h"
 
 
-	//constructor
-	DynString::DynString(char* d)
+	//constructor empty array
+	DynString::DynString(int size)
 	{
-		int i = 0;
-		while (d[i])
-		{
-			i++;
-		}
-		size = i;
-		Container = new char[size];
-		for (int i=0;i<size;i++)
-		{
-			Container[i] = d[i];
-		}
+		this->size = size;
+		Container = new string[size];
 	}
 
+	//constructor filled array
+	DynString::DynString(string* str, int size)
+	{
+		this->size = size;
+		Container = new string[size];
+		for (int i = 0; i < size; i++)
+		{
+			Container[i] = str[i];
+		}
+	}
 
 	//destructor
 	DynString::~DynString()
@@ -28,7 +29,7 @@
 	DynString::DynString(const DynString &obj)
 	{
 		size = obj.size;
-		Container = new char[size];
+		Container = new string[size];
 		for (int i = 0; i < size; i++)
 		{
 			Container[i] = obj.Container[i];
@@ -44,37 +45,20 @@
 		obj.Container = nullptr;
 	}
 
-	//external addition operator overload
-	DynString& DynString::operator+(const DynString &obj)
-	{
-		char* newContainer = new char[(size + obj.size)];
-		
-		for (int i = 0; i < size; i++)
-		{
-			newContainer[i] = Container[i];
-		}
-		for (int i = 0; i < obj.size; i++)
-		{
-			newContainer[(size+i)] = obj.Container[i];
-		}
-		Container = newContainer;
-		size += obj.size;
-		return *this;
-	}
-
-	//copy assignment operator overload
+	//assignment operator overload
 	DynString& DynString::operator=(const DynString &obj)
 	{
 		if (this != &obj)
 		{
 			delete[] Container;
 			size = obj.size;
-			Container = new char[size];
+			Container = new string[size];
 			for (int i = 0; i < size; i++)
 			{
 				Container[i] = obj.Container[i];
 			}
 		}
+		else cout << "Self-assignment";
 
 		return *this;
 	}
@@ -95,31 +79,115 @@
 		return *this;
 	}
 
+
+	//add element in the end
+	void DynString::AddStr(string newStr)
+	{
+		size++;
+		string* newContainer = new string[size];
+		for (int i = 0; i < size - 1; i++)
+		{
+			newContainer[i] = Container[i];
+		}
+		newContainer[size - 1] = newStr;
+		Container = newContainer;
+	}
+
+	//add element by index
+	void DynString::AddStr(string newStr, int index)
+	{
+		if (index >= size)
+		{
+			cout << "Wrong index" << endl;
+			return;
+		}
+		size++;
+		string* newContainer = new string[size];
+		for (int i = 0; i < index; i++)
+		{
+			newContainer[i] = Container[i];
+		}
+		newContainer[index] = newStr;
+		for (int i = index + 1; i < size - 1; i++)
+		{
+			newContainer[i] = Container[i - 1];
+		}
+		Container = newContainer;
+	}
+
+
+	//delete element by index
+	void DynString::DelStr(int index)
+	{
+		if (index >= size)
+		{
+			cout << "Wrong index" << endl;
+			return;
+		}
+		size--;
+		string* newContainer = new string[size];
+		for (int i = 0; i < index; i++)
+		{
+			newContainer[i] = Container[i];
+		}
+		for (int i = index; i < size - 1; i++)
+		{
+			newContainer[i] = Container[i + 1];
+		}
+		Container = newContainer;
+	}
+
+	//delete element by value
+	void DynString::DelStr(string delStr)
+	{
+		int index;
+		bool found = false;
+		for (int i = 0; i < size; i++)
+		{
+			if (Container[i] == delStr)
+			{
+				index = i;
+				found = true;
+			}
+		}
+		if (!found)
+		{
+			cout << "Element not found" << endl;
+			return;
+		}
+		size--;
+		string* newContainer = new string[size];
+		for (int i = 0; i < index; i++)
+		{
+			newContainer[i] = Container[i];
+		}
+		for (int i = index; i < size - 1; i++)
+		{
+			newContainer[i] = Container[i + 1];
+		}
+		Container = newContainer;
+	}
+
 	//output content
 	void DynString::Show()
 	{
 		for (int i = 0; i < size; i++)
 		{
-			cout << Container[i];
+			cout << Container[i] << " ";
 		}
+		cout << endl;
 	}
 
-	//compare
-	bool DynString::IsMore(DynString str)
+	//sorting content
+	void DynString::Sort()
 	{
-		int count = str.size;
-		if (this->size < str.size)	count = this->size;
-		for (int i = 0; i < count; i++)
+		for (int i = 0; i < size; i++)
 		{
-			if (this->Container[i] != str.Container[i])
+			for (int j = 0; j < size; j++)
 			{
-				if (this->Container[i] > str.Container[i])	return true;
-				return false;
+				if (strcmp(Container[i].c_str(), Container[j].c_str()) > 0) swap(Container[i], Container[j]);
 			}
 		}
-		return false;
 	}
-	
-	
 
 
